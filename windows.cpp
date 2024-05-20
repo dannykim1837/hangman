@@ -6,6 +6,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <map>
+#include <set>
+#include <algorithm>
+
 
 void displayHangman(int tries) {
     switch (tries) {
@@ -88,11 +91,25 @@ std::string getWord(const std::vector<std::string>& words, int wordLength) {
     return filteredWords[index];
 }
 
+void displayAvailableLetters(const std::set<char>& guessedLetters) {
+    std::cout << "Available letters: ";
+    std::cout << "\n";
+    for (char letter = 'a'; letter <= 'z'; ++letter) {
+        if (guessedLetters.find(letter) == guessedLetters.end()) {
+            std::cout << letter << " ";
+        } else {
+            std::cout << "_ ";
+        }
+    }
+    std::cout << "\n";
+}
+
 void playGame(const std::vector<std::string>& words, int wordLength) {
     std::string word = getWord(words, wordLength);
     std::string guessedWord(word.length(), '_');
     int tries = 0;
     std::vector<char> incorrectGuesses;
+    std::set<char> guessedLetters;
     bool won = false;
 
     while (tries < 6 && !won) {
@@ -102,9 +119,19 @@ void playGame(const std::vector<std::string>& words, int wordLength) {
         std::cout << "\nTries left: " << 6 - tries << "\n";
         displayHangman(tries);
 
+        displayAvailableLetters(guessedLetters);
+
         char guess;
         std::cout << "Enter a letter: ";
         std::cin >> guess;
+        guess = tolower(guess);
+
+        if (guessedLetters.find(guess) != guessedLetters.end()) {
+            std::cout << "You've already guessed that letter.\n";
+            continue;
+        }
+
+        guessedLetters.insert(guess);
 
         // Character 이미 추측되었는지 확인
         bool alreadyGuessed = false;
