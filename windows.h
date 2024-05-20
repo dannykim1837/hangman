@@ -6,9 +6,14 @@
 #define CSE310_WINDOWS_H
 
 
-class windows {
+#include <iostream>
+#include <vector>
+#include <string>
 
-};
-
+// 함수 선언
+void displayHangman(int tries);
+std::string getWord(const std::vector<std::string>& words, int wordLength);
+void playGame(const std::vector<std::string>& words, int wordLength);
+void showMainMenu();
 
 #endif //CSE310_WINDOWS_H
