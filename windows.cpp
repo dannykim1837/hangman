@@ -93,8 +93,18 @@ std::string getWord(const std::vector<std::string>& words, int wordLength) {
 
 void displayAvailableLetters(const std::set<char>& guessedLetters) {
     std::cout << "Available letters: ";
+    std::string firstRow = "abcdefghijklm";
+    std::string secondRow = "nopqrstuvwxyz";
+    std::cout << "\n";1
+    for (char letter : firstRow) {
+        if (guessedLetters.find(letter) == guessedLetters.end()) {
+            std::cout << letter << " ";
+        } else {
+            std::cout << "_ ";
+        }
+    }
     std::cout << "\n";
-    for (char letter = 'a'; letter <= 'z'; ++letter) {
+    for (char letter : secondRow) {
         if (guessedLetters.find(letter) == guessedLetters.end()) {
             std::cout << letter << " ";
         } else {
